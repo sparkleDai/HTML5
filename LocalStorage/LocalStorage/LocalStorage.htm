@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="JS/StorageTempSp.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        var countKey = StorageTempSp.StorageKeySet.Count;
+        var ascii = StorageTempSp.StorageKeySet.Ascii;
+        function Count() {
+            if (window.localStorage) {
+
+                if (!localStorage.getItem(countKey)) {
+                    localStorage.setItem(countKey, "0");
+                }
+                else {
+                    var temp = localStorage.getItem(countKey);
+                    //localStorage.removeItem(countKey);
+                    localStorage.setItem(countKey, parseInt(temp) + 1);
+                }
+
+                if (!localStorage.getItem(ascii)) {
+                    localStorage.setItem(ascii, "A");
+                }
+                else {
+                    localStorage.setItem(ascii, String.fromCharCode(localStorage.getItem(ascii).charCodeAt() + 1));
+                }
+
+                document.getElementById("TextValue").value = localStorage.getItem(countKey) + localStorage.getItem(ascii);
+            } else {
+                alert('This browser does NOT support localStorage');
+            }
+        }
+
+        function Reset() {
+            if (window.localStorage) {
+                ClearByRemoveItem();
+                //ClearByClear();
+                document.getElementById("TextValue").value = localStorage.getItem(countKey) + localStorage.getItem(ascii);
+            } else {
+                alert('This browser does NOT support localStorage');
+            }
+        }
+
+        function ClearByRemoveItem() {
+            //Remove one item:removeItem(key);
+            if (localStorage.getItem(countKey)) {
+                localStorage.removeItem(countKey);
+            }
+
+            if (localStorage.getItem(ascii)) {
+                localStorage.removeItem(ascii);
+            }
+        }
+
+        function ClearByClear() {
+            //Remove all item:clear();
+            localStorage.clear();
+        }           
+    </script>
+</head>
+<body>
+    <div>
+        <input id="TextValue" type="text" value="0" />
+        <input id="ButtonCount" type="button" value="Count" onclick="Count();" />
+        <input id="ButtonReset" type="button" value="Reset" onclick="Reset();" />
+    </div>
+</body>
+</html>
